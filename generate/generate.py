@@ -28,24 +28,24 @@ def main():
             help='request pseudo-random, unique (per exec) codes')
     args = parser.parse_args()
     if not args.random:
-        if args.num > (args.size * 10):
-            print  ("ERROR: Cannot generate unique codes becuase num codes requested must be " +
-                    "less than or equal to requsted code size x 10")
-            print  ("num was '" + str(args.num) + "' but max num for code size '" + str(args.size) + 
-                    "' is '" + str((args.size * 10)) + "'")
+        maxcodes = 10**args.size
+        if args.num > maxcodes:
+            print  ("ERROR: Cannot generate unique codes with iteration becuase num codes requested must be " +
+                    "less than or equal to 10^size")
+            print  ("num was '{0}' but max num for code size '{1}' is '{2}'".format(str(args.num), str(args.size), maxcodes))
             sys.exit(1)
     else:
-        maxcodes = args.size**len(alphanumeric)
+        maxcodes = math.factorial(len(alphanumeric)) / math.factorial(abs((len(alphanumeric) - args.size)))
         if args.num > maxcodes:
             print  ("ERROR: Cannot generate unique \"random\" codes becuase num codes requested must be " +
-                    "less than or equal to requsted code size x " + str(len(alphanumeric)))
-            print  ("num was '" + str(args.num) + "' but max num for code size '" + str(args.size) + 
-                    "' is '" + str(maxcodes) + "'")
+                    "less than or equal to requsted code {0}!/({0} - size)!".format(str(len(alphanumeric))))
+            print  ("num was '{0}' but max num for code size '{1}' is '{2}'".format(str(args.num), str(args.size), maxcodes))
             sys.exit(1)
     filename = generate_codes(args.num, args.size, args.random)
     print ("Generation complete, codes ouput in %s" % filename)
 
 import argparse
+import math
 import random
 import string
 import sys
