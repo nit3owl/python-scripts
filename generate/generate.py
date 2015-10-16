@@ -2,16 +2,23 @@ def get_random_code(size):
     return ''.join(random.choice(alphanumeric) for _ in range(size))
 
 def generate_codes(num, size, random):
-    output = open('output.csv', 'w')
+    filename = 'output_' + time.strftime("%H%M%S") + '.csv'
+    output = open(filename, 'w')
     if not random:
         for i in range(0, num):
-            temp = '%0'+str(size)+'d' 
+            temp = '%0' + str(size) + 'd' 
             temp = temp % (i,)
             output.write('%s,\n' % temp)
+        output.write(temp)
     else:
-        for i in range(0, num):
-            output.write('%s,\n' % get_random_code(size))
+        codes = set()
+        while len(codes) < num:
+            codes.add(get_random_code(size))
+        
+        for c in codes:
+            output.write('%s,\n' % c)
     output.close()
+    return filename
 
 def main():
     parser = argparse.ArgumentParser(description='Generate a .csv file with N codes of Y length.')
@@ -28,18 +35,20 @@ def main():
                     "' is '" + str((args.size * 10)) + "'")
             sys.exit(1)
     else:
-        if args.num > (args.size * len(alphanumeric)):
+        maxcodes = args.size**len(alphanumeric)
+        if args.num > maxcodes:
             print  ("ERROR: Cannot generate unique \"random\" codes becuase num codes requested must be " +
                     "less than or equal to requsted code size x " + str(len(alphanumeric)))
             print  ("num was '" + str(args.num) + "' but max num for code size '" + str(args.size) + 
-                    "' is '" + str((args.size * len(alphanumeric))) + "'")
+                    "' is '" + str(maxcodes) + "'")
             sys.exit(1)
-    generate_codes(args.num, args.size, args.random)
-    print ("Generation complete, codes ouput in output.csv.")
+    filename = generate_codes(args.num, args.size, args.random)
+    print ("Generation complete, codes ouput in %s" % filename)
 
 import argparse
-import string
 import random
+import string
 import sys
+import time
 alphanumeric = string.ascii_uppercase + string.digits
 main()
