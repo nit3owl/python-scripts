@@ -27,3 +27,10 @@ The formulas used are to determine the max number of codes are:
 ### cc_script
 
 This script takes two RAW files as input and finds entries in file1 do not have duplicate primary key entries in file2
+
+### busy
+
+This script lets you show everyone how busy you really are, despite whatever they may think. It will print a variety of "random", "interesting" 
+messages which indicate all the interesting work you're getting done; try running it on your most visible monitor.
+
+The script allows some customization as to the level of busyness you feel you need to show the world.
