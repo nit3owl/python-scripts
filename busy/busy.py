@@ -17,7 +17,7 @@ def get_busy(busyness):
     
     while True:
         task = random.choice(tasks)
-        print ('{0}: {1}'.format(random.randint(0, 1000000000), task))
+        print('{0}: {1}'.format(random.randint(0, 1000000000), task))
         time.sleep(sleepiness + (random.randint(0, 1) * .31))
 
 def positive_single_digit_int(value):
@@ -32,13 +32,18 @@ def main():
 
     args = parser.parse_args()
 
-    print ('Becoming busy at level {0}...'.format(args.busyness_level))
-    get_busy(args.busyness_level)
+    try:
+        print('Becoming busy at level {0}...'.format(args.busyness_level))
+        get_busy(args.busyness_level)
+    except KeyboardInterrupt:
+        print('\nBusyness interrupted; exiting...')
+        sys.exit(0)
 
 import argparse
 import math
 import random
 import string
 import time
+import sys
 
 main()
