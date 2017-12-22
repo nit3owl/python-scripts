@@ -26,7 +26,7 @@ The formulas used are to determine the max number of codes are:
 													
 ### cc_script
 
-This script takes two RAW files as input and finds entries in file1 do not have duplicate primary key entries in file2
+This script takes two RAW files as input and finds entries in file1 that do not have duplicate primary key entries in file2
 
 ### busy
 
