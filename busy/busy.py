@@ -44,7 +44,7 @@ def positive_single_digit_int(value):
 
 def main():
     parser = argparse.ArgumentParser(description = 'Let everyone see how busy you really are')
-    parser.add_argument('busyness_level', metavar='b', type=positive_single_digit_int, default=5, help='busyness level between 0 (not at all) and 9 (SUPER busy)')
+    parser.add_argument('busyness_level', type=positive_single_digit_int, default=5, nargs='?', help='busyness level between 0 (not at all) and 9 (SUPER busy)')
     parser.add_argument('--offline', action="store_true", help='runs in "offline" mode and will not make external API calls for dummy data')
 
     args = parser.parse_args()
