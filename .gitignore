@@ -2,3 +2,4 @@ logs
 .vscode
 *~
 *.csv
+config.json
