@@ -1,3 +1,12 @@
+def print_table(json):
+    table_headers = ['Location', 'Date', 'AQI', 'Quality']
+    for header in table_headers:
+        print('{:>15}'.format(header), end='')
+    print('\n---------------')
+
+    for day in json:
+        print('{:>15}{:>15}{:>15}{:>15}'.format(day['ReportingArea'][:14], day['DateForecast'], day['AQI'], day['Category']['Name']))
+
 def fetch_report_by_zip(zipcode, api_key):
     base_url = 'http://www.airnowapi.org/aq/forecast/zipCode/?format=application/json'
     zip_param = 'zipCode={0}'.format(zipcode)
@@ -8,7 +17,7 @@ def fetch_report_by_zip(zipcode, api_key):
     print(base_url + "&" + zip_param + "&" + date_param + "&" + distance_param + "&" + api_param)
     report = urllib.request.urlopen(base_url + "&" + zip_param + "&" + date_param + "&" + distance_param + "&" + api_param).read()
     parsed = json.loads(report.decode('utf8').replace("'", '"'))
-    return json.dumps(parsed, indent=4, sort_keys=False)
+    return parsed
 
 def positive_five_digit_int(value):
     #this may not be a valid zipcode but zipcode validation is a pain
@@ -47,7 +56,7 @@ def main():
     config = load_config()
     api_key = get_api_key(config)
     response = fetch_report_by_zip(args.zipcode, api_key)
-    print(response)
+    print_table(response)
 
 import string
 import datetime
