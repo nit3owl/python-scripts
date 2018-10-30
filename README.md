@@ -34,3 +34,7 @@ This script lets you show everyone how busy you really are, despite whatever the
 messages which indicate all the interesting work you're getting done; try running it on your most visible monitor.
 
 The script allows some customization as to the level of busyness you feel you need to show the world.
+
+###
+
+This script calls a website to fetch air quality reports. The reports are parsed, "analyzed", and pretty-printed to screen.s
