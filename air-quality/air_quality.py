@@ -1,11 +1,12 @@
 def print_table(json):
     table_headers = ['Location', 'Date', 'AQI', 'Quality']
     for header in table_headers:
-        print('{:>15}'.format(header), end='')
-    print('\n---------------')
+        print('{:^30}'.format(header), end='')
+    
+    print('\n' + '-' * (len(table_headers) * 30))
 
     for day in json:
-        print('{:>15}{:>15}{:>15}{:>15}'.format(day['ReportingArea'][:14], day['DateForecast'], day['AQI'], day['Category']['Name']))
+        print('{:^30}{:^30}{:^30}{:^30}'.format(day['ReportingArea'][:30], day['DateForecast'], day['AQI'], day['Category']['Name']))
 
 def fetch_report_by_zip(zipcode, api_key):
     base_url = 'http://www.airnowapi.org/aq/forecast/zipCode/?format=application/json'
@@ -14,7 +15,7 @@ def fetch_report_by_zip(zipcode, api_key):
     distance_param = 'distance={0}'.format(5)
     api_param = 'API_KEY={0}'.format(api_key)
 
-    print(base_url + "&" + zip_param + "&" + date_param + "&" + distance_param + "&" + api_param)
+    print(base_url + "&" + zip_param + "&" + date_param + "&" + distance_param + "&" + api_param + '\n')
     report = urllib.request.urlopen(base_url + "&" + zip_param + "&" + date_param + "&" + distance_param + "&" + api_param).read()
     parsed = json.loads(report.decode('utf8').replace("'", '"'))
     return parsed
