@@ -1,4 +1,5 @@
 import linecache
+import sys
 from collections import OrderedDict
 
 def compare_files(fn1, fn2):
@@ -44,5 +45,5 @@ def main(args):
 
     compare_files(fn1, fn2)
 
-import sys
+
 main(sys.argv)

@@ -1,3 +1,10 @@
+import string
+import datetime
+import argparse
+import urllib.request
+import json
+import sys
+
 def print_table(json):
     table_headers = ['Location', 'Date', 'AQI', 'Quality']
     for header in table_headers:
@@ -58,12 +65,5 @@ def main():
     api_key = get_api_key(config)
     response = fetch_report_by_zip(args.zipcode, api_key)
     print_table(response)
-
-import string
-import datetime
-import argparse
-import urllib.request
-import json
-import sys
 
 main()

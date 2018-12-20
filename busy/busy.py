@@ -1,3 +1,12 @@
+import argparse
+import math
+import random
+import string
+import time
+import sys
+import urllib.request
+import json
+
 def get_busy_tasks():
     tasks = [
             'rejiggering the capacitor',
@@ -61,14 +70,5 @@ def main():
     except KeyboardInterrupt:
         print('\nBusyness interrupted; exiting...')
         sys.exit(0)
-
-import argparse
-import math
-import random
-import string
-import time
-import sys
-import urllib.request
-import json
 
 main()
