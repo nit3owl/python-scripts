@@ -35,6 +35,10 @@ messages which indicate all the interesting work you're getting done; try runnin
 
 The script allows some customization as to the level of busyness you feel you need to show the world.
 
-###
+### air_quality
 
 This script calls a website to fetch air quality reports. The reports are parsed, "analyzed", and pretty-printed to screen.s
+
+### git_activity
+
+Provides a way to easily search git repos to tally up, across all repos, the number of commits per user or per month.
