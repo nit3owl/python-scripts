@@ -1,21 +1,24 @@
 import os
 import subprocess
 import calendar
-import datetime
+import datetime as dt
+from datetime import datetime
 import argparse
 import sys
+import collections
 
 def print_output(output_map, sorted):
     for key, value in output_map.items():
-        print("{}: {} commits".format(key, value))
+        print('{}: {} commits'.format(key, value))
 
 def check_and_pull():
     subprocess.call(['git', 'checkout', 'master'])
     subprocess.call(['git', 'pull'])
 
 def count_commits_per_month(repos):
-    commits_per_month = {}
-    current_year = datetime.datetime.now().year
+    commits_per_month = collections.OrderedDict()
+    current_year = datetime.now().year - 1
+    current_month = 7
 
     for repo in repos:
         wd = os.getcwd()
@@ -23,41 +26,40 @@ def count_commits_per_month(repos):
 
         check_and_pull()
 
-        for i in range(1, 12):
-            month = calendar.month_abbr[i]
+        for i in range(1, 13):
+            if current_month > 12:
+                current_month = 1
+                current_year += 1
+
+            month = calendar.month_abbr[current_month]
+            if current_month < 12:
+                next_month = current_month + 1
+                next_year = current_year
+            else:
+                next_month = 1
+                next_year = current_year + 1
 
             since = '--since="' + month + ' 1 ' + str(current_year) + '"'
-            before = '--before="' + calendar.month_abbr[i + 1] + ' 1 ' + str(current_year) + '"'
+            before = '--before="' + calendar.month_abbr[next_month] + ' 1 ' + str(next_year) + '"'
             command = ['git', 'rev-list', '--count', since, before, '--all', '--no-merges']
             output, error = subprocess.Popen(command, universal_newlines=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE).communicate()
             
-            if month in commits_per_month:
-                commits = commits_per_month[month]
-                commits_per_month[month] = commits + int(output)
+            month_year = '{} {}'.format(month, str(current_year))
+            if month_year in commits_per_month:
+                commits = commits_per_month[month_year]
+                commits_per_month[month_year] = commits + int(output)
             else:
-                commits_per_month[month] = int(output)
-
-            #since the year has changed and we're being lazy, get the final month of the year
-            month = calendar.month_abbr[12]
-
-            since = '--since="' + month + ' 1 ' + str(current_year) + '"'
-            before = '--before="' + calendar.month_abbr[i + 1] + ' 1 ' + str(current_year) + '"'
-            command = ['git', 'rev-list', '--count', since, before, '--all', '--no-merges']
-            output, error = subprocess.Popen(command, universal_newlines=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE).communicate()
-            
-            if month in commits_per_month:
-                commits = commits_per_month[month]
-                commits_per_month[month] = commits + int(output)
-            else:
-                commits_per_month[month] = int(output)
+                commits_per_month[month_year] = int(output)
 
             os.chdir(wd)
+
+            current_month += 1
 
         print_output(commits_per_month, False)
 
 def count_commits_per_user(repos):
     commits_per_user = {}
-    current_year = datetime.datetime.now().year
+    current_year = datetime.now().year
 
     for repo in repos:
         wd = os.getcwd()

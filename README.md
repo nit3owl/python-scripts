@@ -41,4 +41,5 @@ This script calls a website to fetch air quality reports. The reports are parsed
 
 ### git_activity
 
-Provides a way to easily search git repos to tally up, across all repos, the number of commits per user or per month.
+Provides a way to easily search git repos to tally up, across all repos, the number of commits per user or per month. 
+CURRENTLY DEPENDS ON FUNCTIONALITY IN UNIX-LIKE SYSTEMS.
