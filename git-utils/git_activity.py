@@ -18,7 +18,7 @@ def check_and_pull():
 def count_commits_per_month(repos):
     commits_per_month = collections.OrderedDict()
     current_year = datetime.now().year - 1
-    current_month = 7
+    current_month = datetime.now().month + 1
 
     for repo in repos:
         wd = os.getcwd()
