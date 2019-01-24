@@ -17,12 +17,13 @@ def check_and_pull():
 
 def count_commits_per_month(repos):
     commits_per_month = collections.OrderedDict()
-    current_year = datetime.now().year - 1
-    current_month = datetime.now().month + 1
 
     for repo in repos:
         wd = os.getcwd()
         os.chdir(repo)
+
+        current_year = datetime.now().year - 1
+        current_month = datetime.now().month + 1
 
         check_and_pull()
 
@@ -51,11 +52,11 @@ def count_commits_per_month(repos):
             else:
                 commits_per_month[month_year] = int(output)
 
-            os.chdir(wd)
-
             current_month += 1
 
-        print_output(commits_per_month, False)
+        os.chdir(wd)
+
+    print_output(commits_per_month, False)
 
 def count_commits_per_user(repos):
     commits_per_user = {}
