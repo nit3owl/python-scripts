@@ -5,9 +5,14 @@ import datetime as dt
 from datetime import datetime
 import argparse
 import sys
-import collections
+import operator
+from collections import OrderedDict
 
-def print_output(output_map, sorted):
+def print_output(output_map, sort):
+    if sort == True:
+        print("hit")
+        output_map = OrderedDict(sorted(output_map.items(), key=lambda x: x[1], reverse=True))
+
     for key, value in output_map.items():
         print('{}: {} commits'.format(key, value))
 
@@ -16,7 +21,7 @@ def check_and_pull():
     subprocess.call(['git', 'pull'])
 
 def count_commits_per_month(repos):
-    commits_per_month = collections.OrderedDict()
+    commits_per_month = OrderedDict()
 
     for repo in repos:
         wd = os.getcwd()
@@ -97,7 +102,7 @@ def main():
     parser = argparse.ArgumentParser(description = 'Use git\'s logging to count commits')
     parser.add_argument('metric', nargs='?', help='user = count commits by user | month = count commits by month')
     parser.add_argument('--dir', nargs='?', help='root directory to search for git repos - defaults to current')
-    #parser.add_argument('--author', nargs='?', help='counts commits pnly by the supplied author')
+    #parser.add_argument('--author', nargs='?', help='counts commits only by the supplied author')
 
     args = parser.parse_args()
 
