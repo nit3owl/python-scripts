@@ -99,7 +99,21 @@ def count_commits_per_user(repos, author):
     print_output(commits_per_user, True)
 
 def get_directory_list(directory):
-    return [directory]
+    git_dirs = []
+    if not os.path.isdir(directory): 
+        print('{} not found - please check path.'.format(directory))
+        sys.exit(1)
+
+    for root, subdirs, files in os.walk(directory):
+        if '.git' in subdirs:
+            print('found .git in {}'.format(root))
+            git_dirs.append(root)
+
+    if len(git_dirs) == 0:
+        print('{} did not contain any git directories - cannot proceed.'.format(directory))
+        sys.exit(1)
+
+    return git_dirs
 
 def main():
     parser = argparse.ArgumentParser(description = 'Use git\'s logging to count commits')
