@@ -4,6 +4,7 @@ import argparse
 import urllib.request
 import json
 import sys
+import os
 
 def print_table(json):
     table_headers = ['Location', 'Date', 'AQI', 'Quality']
@@ -36,11 +37,14 @@ def positive_five_digit_int(value):
 
 def load_config():
     config_file = 'config.json'
+    script_path = os.path.dirname(sys.argv[0])   
+    config_path = os.path.join(script_path, config_file)
+
     try:
-        with open(config_file) as f:
+        with open(config_path) as f:
             config = json.load(f)
     except FileNotFoundError:
-        print('Script requires {0} file to run.'.format(config_file))
+        print('Script requires {0} file to run - place file in same directory as script.'.format(config_file))
         sys.exit(1)
     
     return config
