@@ -5,7 +5,7 @@
 ### generate
 
 This script will generate a .csv with N "codes" of Y length. The generated codes will be unique (per execution). If the -r flag
-is specified, the codes will be "random" alphanumeric strings. Otherwise, the codes are strings from 0 to N with 0's prepended
+is specified, the codes will be "random" alphanumeric strings. Otherwise, the codes are strings from 0 to n with 0's prepended
 to make each code the length requested, eg - "0000", "0001", "0002", etc.
 
 Uniqueness is guaranteed for non-random codes through iteration. For random codes, it is guaranteed via the use of a set to hold
@@ -37,9 +37,16 @@ The script allows some customization as to the level of busyness you feel you ne
 
 ### air_quality
 
-This script calls a website to fetch air quality reports. The reports are parsed, "analyzed", and pretty-printed to screen.s
+This script calls a website to fetch air quality reports. The reports are parsed, "analyzed", and pretty-printed to screen.
+
+This script requires a a free www.airnowapi.org API key. The key should be placed in a configuration file located in the root directory where the air_quality.py script is located and should be in the following format:
+```
+{
+    "api_key": "ABC123-0000-1111-2222-000000000"
+}
+```
 
 ### git_activity
 
-Provides a way to easily search git repos to tally up, across all repos, the number of commits per user or per month. 
+Provides a way to easily search git repos to tally up, across all repos, the number of commits per user or per month. Given a root directory, the script will search recursively for git repositoies to include in the activity aggregation. Activity can be further filtered by a specific author.
 CURRENTLY DEPENDS ON FUNCTIONALITY IN UNIX-LIKE SYSTEMS.
